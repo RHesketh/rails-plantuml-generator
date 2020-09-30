@@ -1,9 +1,9 @@
 # Rails::Plantuml::Generator
-This gem Genrates a plantuml diagramm from your rails models for easy viewing.
+This gem Genrates a plantuml diagram from your rails models for easy viewing.
 
 ## Usage
-Run `rake plantuml:generate` to generate a plantuml diagramm of your models. The 
-diagramm will be saved as `diagramm.pu`
+Run `rake plantuml:generate` to generate a plantuml diagram of your models. The 
+diagram will be saved as `diagram.pu`
 
 You may pass a regex as argument to only include classes that match the given regex.
 
