@@ -10,9 +10,13 @@ module Rails
         end
 
         def class_relevant?(clazz)
-          return false unless clazz < ((defined? ApplicationRecord).present? ? ApplicationRecord : ActiveRecord::Base)
+          return false unless class_inherits_from_activerecord?(clazz)
           return true unless @whitelist_regex
           !@whitelist_regex.match(clazz.name).nil?
+        end
+
+        def class_inherits_from_activerecord?(clazz)
+          clazz < ((defined? ApplicationRecord).present? ? ApplicationRecord : ActiveRecord::Base)
         end
 
         def class_name(clazz)
