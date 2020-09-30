@@ -10,13 +10,17 @@ module Rails
         end
 
         def class_relevant?(clazz)
+          return false unless clazz.present?
           return false unless class_inherits_from_activerecord?(clazz)
           return true unless @whitelist_regex
           !@whitelist_regex.match(clazz.name).nil?
         end
 
         def class_inherits_from_activerecord?(clazz)
-          clazz < ((defined? ApplicationRecord).present? ? ApplicationRecord : ActiveRecord::Base)
+          return false unless clazz.superclass.present?
+
+          active_record_class = ((defined? ApplicationRecord).present? ? ApplicationRecord : ActiveRecord::Base)
+          clazz.superclass.name.demodulize == active_record_class.name
         end
 
         def class_name(clazz)
@@ -41,7 +45,7 @@ module Rails
             associations.each do |association|
               next if association.options[:polymorphic]
               next if association.through_reflection
-              other = association.class_name.constantize
+              other = association.klass.name.constantize
 
               next unless class_relevant? other
 
